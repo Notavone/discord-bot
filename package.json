@@ -1,0 +1,21 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/bot.js",
+  "scripts": {
+    "start": "node ./src/bot.js",
+    "standard": "standard --fix",
+    "test": "standard --fix && node ./src/bot.js"
+  },
+  "keywords": [],
+  "author": "Léo Hugonnot",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.4.1",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "standard": "^15.0.0"
+  }
+}
