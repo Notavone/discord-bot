@@ -6,7 +6,7 @@ module.exports = {
     const args = message.content.slice(prefix.length).split(/\s/gm)
     const command = args.shift()
 
-    console.log(command, args, client.commands)
+    console.log(command, args.join(' '), args)
 
     client.commands.forEach((cmd) => {
       const cmdFile = require(`../commands/${cmd}.js`)
