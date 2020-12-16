@@ -7,8 +7,10 @@ module.exports = {
     const command = args.shift()
     const commands = []
     client.commands.forEach((command) => {
-      commands.push(require(`../command/${command}.js`))
+      commands.push(require(`../commands/${command}.js`))
     })
+
+    console.log(commands)
 
     const cmdFile = commands.find((cmd) => cmd.name === command || (cmd.aliases && cmd.aliases.includes(command)))
 
