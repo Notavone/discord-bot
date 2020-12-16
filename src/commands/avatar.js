@@ -6,8 +6,8 @@ module.exports = {
     if (message.mentions.size < 1) {
       await message.channel.send(getAvatarUrl(message.author))
     } else {
-      message.mentions.members.forEach(async (member) => {
-        await message.channel.send(getAvatarUrl(member.user))
+      message.mentions.members.forEach((member) => {
+        message.channel.send(getAvatarUrl(member.user))
       })
     }
   }
