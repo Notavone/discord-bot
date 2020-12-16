@@ -3,11 +3,11 @@ module.exports = {
   aliases: ['pp'],
   guildOnly: true,
   run: async (client, message) => {
-    if (message.mentions.size < 1) {
+    if (message.mentions.users.size < 1) {
       await message.channel.send(getAvatarUrl(message.author))
     } else {
-      message.mentions.members.forEach((member) => {
-        message.channel.send(getAvatarUrl(member.user))
+      message.mentions.users.forEach((user) => {
+        message.channel.send(getAvatarUrl(user))
       })
     }
   }
