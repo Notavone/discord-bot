@@ -1,7 +1,6 @@
 module.exports = {
   name: 'avatar',
   aliases: ['pp'],
-  guildOnly: true,
   run: async (client, message) => {
     if (message.mentions.users.size < 1) {
       await message.channel.send(getAvatarUrl(message.author))

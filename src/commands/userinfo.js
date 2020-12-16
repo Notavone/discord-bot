@@ -4,7 +4,6 @@ const leadingZero = require('../functions/leadingZero')
 module.exports = {
   name: 'userinfo',
   aliases: ['ui', 'info', 'uinfo'],
-  guildOnly: true,
   run: async (client, message) => {
     const mention = message.mentions.users.size > 0 ? message.mentions.users.first() : message.author
     const date = mention.createdAt
