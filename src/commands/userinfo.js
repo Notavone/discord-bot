@@ -10,7 +10,7 @@ module.exports = {
     const date = mention.createdAt
     const embed = new Discord.MessageEmbed()
       .setTitle('Informations')
-      .setDescription(`Date d'inscription : ${leadingZero(date.getDate())}/${leadingZero(date.getMonth())}/${leadingZero(date.getFullYear())}`)
+      .setDescription(`Date d'inscription : ${leadingZero(date.getDate())}/${leadingZero(date.getMonth() + 1)}/${leadingZero(date.getFullYear())}`)
 
     await message.channel.send(embed)
   }
