@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const leadingZero = require('../functions/leadingZero')
+const leadingZero = require('../utils/functions')
 
 module.exports = {
   name: 'userinfo',
