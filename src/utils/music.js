@@ -124,11 +124,13 @@ class ServerQueue {
     this.connection.dispatcher.end()
   }
 
-  async skip () {
+  async skip (verbose) {
     this.connection.dispatcher.end()
-    const embed = new Discord.MessageEmbed()
-      .setDescription('Skip!')
-    await this.textChannel.send(embed)
+    if (verbose) {
+      const embed = new Discord.MessageEmbed()
+        .setDescription('Skip!')
+      await this.textChannel.send(embed)
+    }
   }
 
   async now () {
