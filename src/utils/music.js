@@ -74,13 +74,12 @@ class ServerQueue {
       .on('finish', async () => {
         const embed = new Discord.MessageEmbed()
         const video = this.videos.shift()
-        if (this.repeat) this.videos.push(video)
-
         if (this.videos.length === 0) {
           embed.setDescription('La file d\'attente est vide, je me déconnecte!')
           this.connection.disconnect()
           this.client.queues.set(this.guildID, null)
         } else {
+          if (this.repeat) this.videos.push(video)
           embed.setDescription('Vidéo terminée')
           await this.play()
         }

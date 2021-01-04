@@ -3,6 +3,7 @@ const { arrayDivider } = require('../utils/functions.js')
 
 module.exports = {
   name: 'queue',
+  guildOnly: true,
   run: async (client, message) => {
     const guildID = message.guild.id
     const queue = client.queues.get(guildID)
@@ -32,7 +33,7 @@ module.exports = {
       else await msg.edit(embed)
 
       if (dividedQueue.length > 1) {
-        msg.reactions.cache.forEach(async (reaction) => await reaction.remove())
+        await msg.reactions.cache.forEach((reaction) => reaction.remove())
 
         await msg.react('⬅️')
         const backCollector = msg.createReactionCollector((reaction) => reaction.emoji.name === '⬅️', options)

@@ -3,6 +3,7 @@ const Discord = require('discord.js')
 module.exports = {
   name: 'volume',
   aliases: ['vol'],
+  guildOnly: true,
   run: async (client, message, args) => {
     const guildID = message.guild.id
     const queue = client.queues.get(guildID)

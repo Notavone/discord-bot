@@ -7,6 +7,7 @@ const { ServerQueue, Video } = require('../utils/music.js')
 module.exports = {
   name: 'play',
   aliases: ['p'],
+  guildOnly: true,
   run: async (client, message, args) => {
     const guildID = message.guild.id
     const query = args.join()

@@ -3,6 +3,7 @@ const Discord = require('discord.js')
 module.exports = {
   name: 'repeat',
   aliases: ['rp'],
+  guildOnly: true,
   run: async (client, message) => {
     const guildID = message.guild.id
     const queue = client.queues.get(guildID)
@@ -10,6 +11,6 @@ module.exports = {
     const embed = new Discord.MessageEmbed()
       .setDescription('Il n\'y a pas de file d\'attente pour ce serveur')
     if (!queue) return message.channel.send(embed)
-    queue.toggleRepeat()
+    await queue.toggleRepeat()
   }
 }
