@@ -4,7 +4,7 @@ module.exports = {
   name: 'edt',
   aliases: ['iut'],
   help: 'Permet de récupérer l\'emploi du temps d\'un groupe en fonction de la semaine',
-  syntax: 'edt <group> [<week>]',
+  syntax: 'edt <group> [<1-5>]',
   run: async (client, message, args) => {
     const groupName = args[0].toLowerCase()
     const week = args[1]
