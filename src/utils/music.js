@@ -113,6 +113,18 @@ class ServerQueue {
     await this.textChannel.send(embed)
   }
 
+  async toggleRepeat () {
+    const embed = new Discord.MessageEmbed()
+    embed.setDescription(this.repeat ? 'Repeat ON' : 'Repeat OFF')
+    this.repeat = !this.repeat
+    await this.textChannel.send(embed)
+  }
+
+  stop () {
+    this.videos = []
+    this.connection.dispatcher.end()
+  }
+
   async skip () {
     this.connection.dispatcher.end()
     const embed = new Discord.MessageEmbed()

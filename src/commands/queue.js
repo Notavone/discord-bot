@@ -31,38 +31,39 @@ module.exports = {
       if (!msg) msg = await message.channel.send(embed)
       else await msg.edit(embed)
 
-      msg.reactions.cache.forEach(async (reaction) => await reaction.remove())
+      if (dividedQueue.length > 1) {
+        msg.reactions.cache.forEach(async (reaction) => await reaction.remove())
 
-      await msg.react('⬅️')
+        await msg.react('⬅️')
+        const backCollector = msg.createReactionCollector((reaction) => reaction.emoji.name === '⬅️', options)
+        backCollector.on('collect', async (r) => {
+          await r.remove()
+          backCollector.stop()
+          resetCollector.stop()
+          forwardCollector.stop()
+          return displayPageAndCreateCollector(page - 1 < 0 ? page : page - 1, msg)
+        })
 
-      const backCollector = msg.createReactionCollector((reaction) => reaction.emoji.name === '⬅️', options)
-      backCollector.on('collect', async (r) => {
-        await r.remove()
-        backCollector.stop()
-        resetCollector.stop()
-        forwardCollector.stop()
-        return displayPageAndCreateCollector(page - 1 < 0 ? page : page - 1, msg)
-      })
+        await msg.react('🛑')
+        const resetCollector = msg.createReactionCollector((reaction) => reaction.emoji.name === '🛑', options)
+        resetCollector.on('collect', async (r) => {
+          await r.remove()
+          backCollector.stop()
+          resetCollector.stop()
+          forwardCollector.stop()
+          return displayPageAndCreateCollector(0, msg)
+        })
 
-      await msg.react('🛑')
-      const resetCollector = msg.createReactionCollector((reaction) => reaction.emoji.name === '🛑', options)
-      resetCollector.on('collect', async (r) => {
-        await r.remove()
-        backCollector.stop()
-        resetCollector.stop()
-        forwardCollector.stop()
-        return displayPageAndCreateCollector(0, msg)
-      })
-
-      await msg.react('➡️')
-      const forwardCollector = msg.createReactionCollector((reaction) => reaction.emoji.name === '➡️', options)
-      forwardCollector.on('collect', async (r) => {
-        await r.remove()
-        backCollector.stop()
-        resetCollector.stop()
-        forwardCollector.stop()
-        return displayPageAndCreateCollector(page + 1 > dividedQueue.length ? page : page + 1, msg)
-      })
+        await msg.react('➡️')
+        const forwardCollector = msg.createReactionCollector((reaction) => reaction.emoji.name === '➡️', options)
+        forwardCollector.on('collect', async (r) => {
+          await r.remove()
+          backCollector.stop()
+          resetCollector.stop()
+          forwardCollector.stop()
+          return displayPageAndCreateCollector(page + 1 > dividedQueue.length ? page : page + 1, msg)
+        })
+      }
     }
   }
 }
