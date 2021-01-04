@@ -115,7 +115,7 @@ class ServerQueue {
 
   async toggleRepeat () {
     const embed = new Discord.MessageEmbed()
-    embed.setDescription(this.repeat ? 'Repeat ON' : 'Repeat OFF')
+    embed.setDescription(this.repeat ? 'Repeat OFF' : 'Repeat ON')
     this.repeat = !this.repeat
     await this.textChannel.send(embed)
   }
