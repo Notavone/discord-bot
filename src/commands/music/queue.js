@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const { arrayDivider } = require('../utils/functions.js')
+const { arrayDivider } = require('../../utils/functions.js')
 
 module.exports = {
   name: 'queue',

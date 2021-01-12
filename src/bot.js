@@ -1,23 +1,22 @@
 const Discord = require('discord.js')
-const fs = require('fs')
+const { getFilesRecursive } = require('./utils/functions.js')
 require('dotenv').config()
 
 const client = new Discord.Client()
 const token = process.env.TOKEN
 
-const eventsFiles = fs.readdirSync('./src/events/')
-const events = eventsFiles.map((event) => event.slice(0, -3))
-
-const commandsFiles = fs.readdirSync('./src/commands')
-const commands = commandsFiles.map((command) => command.slice(0, -3))
-client.commands = commands
-client.queues = new Discord.Collection()
-
-events.forEach((event) => {
-  const eventFile = require(`./events/${event}.js`)
-  client.on(event, (...args) => {
-    eventFile.run(client, ...args)
+getFilesRecursive('./src/events')
+  .map((cmd) => cmd.split('events/').pop().slice(0, -3))
+  .forEach((event) => {
+    const eventFile = require(`./events/${event}.js`)
+    client.on(event, (...args) => {
+      eventFile.run(client, ...args)
+    })
   })
-})
+
+client.commands = getFilesRecursive('./src/commands')
+  .map((cmd) => cmd.split('commands/').pop().slice(0, -3))
+
+client.queues = new Discord.Collection()
 
 client.login(token).then((r) => console.log(`Token : ${r}`))

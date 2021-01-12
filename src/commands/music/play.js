@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const ytdl = require('ytdl-core')
 const ytpl = require('ytpl')
 const ytsr = require('ytsr')
-const { ServerQueue, Video } = require('../utils/music.js')
+const { ServerQueue, Video } = require('../../utils/music.js')
 
 module.exports = {
   name: 'play',
