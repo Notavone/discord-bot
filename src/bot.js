@@ -15,7 +15,7 @@ getFilesRecursive('./src/events')
   })
 
 client.commands = getFilesRecursive('./src/commands')
-  .map((command) => command.split('commands/').pop().slice(0, -3))
+  .map((command) => require(`./commands/${command.split('commands/').pop()}`))
 
 client.queues = new Discord.Collection()
 

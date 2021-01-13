@@ -7,13 +7,13 @@ class Video {
    * @param {String} title
    * @param {String} url
    * @param {String} thumbnail
-   * @param {Number} duration
+   * @param {Number || null} duration
    */
   constructor (title, url, thumbnail, duration) {
     this.title = title
     this.url = url
     this.thumbnail = thumbnail
-    this.duration = duration
+    this.duration = duration || undefined
   }
 
   /**
