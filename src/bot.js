@@ -6,7 +6,7 @@ const client = new Discord.Client()
 const token = process.env.TOKEN
 
 getFilesRecursive('./src/events')
-  .map((cmd) => cmd.split('events/').pop().slice(0, -3))
+  .map((event) => event.split('events/').pop().slice(0, -3))
   .forEach((event) => {
     const eventFile = require(`./events/${event}.js`)
     client.on(event, (...args) => {
@@ -15,7 +15,7 @@ getFilesRecursive('./src/events')
   })
 
 client.commands = getFilesRecursive('./src/commands')
-  .map((cmd) => cmd.split('commands/').pop().slice(0, -3))
+  .map((command) => command.split('commands/').pop().slice(0, -3))
 
 client.queues = new Discord.Collection()
 
