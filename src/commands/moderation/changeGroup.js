@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const Command = require('../../utils/cmds.js')
 const cmd = new Command('changeGroup', ['chgroup'], true, true, false)
 cmd.run = async (client, message) => {
-  const memberMentions = [...message.content.matchAll(/<@!(\d{18})>/gm)].map((match) => message.guild.members.cache.get(match[1]))
+  const memberMentions = [...message.content.matchAll(/<@(!)?(\d{18})>/gm)].map((match) => message.guild.members.cache.get(match[2]))
   const roleMentions = [...message.content.matchAll(/<@&(\d{18})>/gm)].map((match) => message.guild.roles.cache.get(match[1]))
 
   if (memberMentions.length > 0 && roleMentions.length > 0) {
