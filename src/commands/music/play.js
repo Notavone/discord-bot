@@ -32,14 +32,12 @@ cmd.run = async (client, message, args) => {
         videoInfo.lengthSeconds
       ))
     } catch (e) {
-      const searchResult = await ytsr(query, {
-        limit: 1
-      })
+      const searchResult = await ytsr(query, { limit: 1 })
+      const searchVideo = searchResult.items.shift()
       videos.push(new Video(
-        searchResult.items[0].title,
-        searchResult.items[0].url,
-        searchResult.items[0].bestThumbnail.url,
-        undefined
+        searchVideo.title,
+        searchVideo.url,
+        searchVideo.bestThumbnail.url
       ))
     }
   }
@@ -50,8 +48,13 @@ cmd.run = async (client, message, args) => {
     await queue.play()
     await connection.voice.setDeaf(true)
   } else {
-    videos.forEach((video) => queue.addVideo(video))
     const embed = new Discord.MessageEmbed()
+    if (queue.spotifyLink) {
+      embed.setDescription('Impossible de jouer de la musique, une session d\'écoute spotify est en cours')
+      return await queue.textChannel.send(embed)
+    }
+
+    videos.forEach((video) => queue.addVideo(video))
     if (videos.length > 1) embed.setDescription(`**${videos.length}** vidéos ajoutées à la file d'attente!`)
     else embed.setDescription(`**[${videos[0].getTitle()}](${videos[0].getURL()})** ajoutée à la file d'attente!`)
     await queue.getTextChannel().send(embed)

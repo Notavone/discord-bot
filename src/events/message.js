@@ -9,7 +9,10 @@ module.exports = {
 
     if (command && command.canExecute(message)) {
       command.run(client, message, args)
-        .catch((e) => message.reply(e.message))
+        .catch((e) => {
+          message.reply(e.message)
+          console.error(e)
+        })
     }
   }
 }

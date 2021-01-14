@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const ytdl = require('ytdl-core')
+const ytsr = require('ytsr')
 
 class Video {
   /**
@@ -57,6 +58,8 @@ class ServerQueue {
     this.textChannel = textChannel
     this.repeat = false
     this.paused = false
+    this.spotifyLink = false
+    this.linkedTo = ''
     this.volume = 1
     this.videos = initialVideos
   }
@@ -72,6 +75,11 @@ class ServerQueue {
     this.connection.play(video.stream())
     this.connection.dispatcher
       .on('finish', async () => {
+        if (this.spotifyLink) {
+          const video = await getSpotifyVideo(this.client, this.linkedTo)
+          if (video) this.videos.push(video)
+        }
+
         const embed = new Discord.MessageEmbed()
         const video = this.videos.shift()
         if (this.videos.length === 0) {
@@ -163,7 +171,32 @@ class ServerQueue {
   addVideo (video) {
     this.videos.push(video)
   }
+
+  async enableSpotifyLink (user) {
+    this.spotifyLink = true
+    this.linkedTo = user
+    await this.play()
+  }
 }
 
+const getSpotifyVideo = async (client, user) => {
+  const userFound = client.users.cache.get(user.id)
+  if (!userFound) return false
+  const userActivities = userFound.presence.activities
+  if (!userActivities) return false
+  const spotifyActivity = userActivities.find((activity) => activity.name === 'Spotify')
+  if (!spotifyActivity) return false
+
+  const artist = spotifyActivity.state
+  const track = spotifyActivity.details
+  const album = spotifyActivity.assets.largeText
+
+  const searchResult = await ytsr(`${artist} ${track} ${album}`, { limit: 1 })
+  if (!searchResult) return false
+  const videoResult = searchResult.items.shift()
+  return new Video(videoResult.title, videoResult.url, videoResult.bestThumbnail.url)
+}
+
+module.exports.getSpotifyVideo = getSpotifyVideo
 module.exports.Video = Video
 module.exports.ServerQueue = ServerQueue
