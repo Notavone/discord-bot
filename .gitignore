@@ -1,3 +1,5 @@
+
 /.idea/
 /node_modules/
 /.env
+/src/commands/unrelated-personal/
