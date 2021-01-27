@@ -12,7 +12,7 @@ cmd.run = async (client, message) => {
     const player = users[playerNo]
     const emoji = emojis[playerNo]
     const filter = (m) => { return m.author === player && !isNaN(m.content) }
-    const collection = await message.channel.awaitMessages(filter, { max: 1, time: 20000 })
+    const collection = await message.channel.awaitMessages(filter, { max: 1, time: 60000 })
     if (!collection.first()) return message.reply('Aucune réponse n\'a été enregistrée, arrêt de la partie.')
     const number = Number(collection.first().content) - 1
     await collection.first().delete().catch()
