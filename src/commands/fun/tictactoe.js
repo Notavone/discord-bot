@@ -6,6 +6,7 @@ cmd.run = async (client, message) => {
   let i = 0
   const n = 3
   const grid = createGrid(n)
+  await message.channel.send(displayGrid(grid))
   do {
     const playerNo = i % 2
     const player = users[playerNo]
@@ -20,7 +21,7 @@ cmd.run = async (client, message) => {
       if (grid[row][col] === '❔') {
         grid[row][col] = emoji
         i++
-        await message.channel.send(grid.map((row) => row.join('')).join('\n'))
+        await message.channel.send(displayGrid(grid))
         if (grid.find((row) => checkRow(row) === true) || checkCol(grid) || checkDiag(grid)) return message.channel.send(`${player.username} à gagné!`)
       } else {
         await message.channel.send('Nope, tricheur va!')
@@ -65,4 +66,8 @@ function checkDiag (grid) {
     diag2.push(grid[i][j])
   }
   return checkRow(diag1) || checkRow(diag2)
+}
+
+function displayGrid (grid) {
+  return grid.map((row) => row.join('')).join('\n')
 }
