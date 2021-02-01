@@ -5,7 +5,7 @@ cmd.run = async (client, message) => {
   if (!message.mentions.users.first()) return message.reply('if faut mentionner l\'autre joueur')
   const users = [message.author, message.mentions.users.first()]
   let i = 0
-  const n = 4
+  const n = 3
   const grid = createGrid(n)
   const msg = await message.channel.send(displayGrid(grid))
   do {
@@ -26,7 +26,7 @@ cmd.run = async (client, message) => {
         await msg.edit(displayGrid(grid))
         if (grid.find((row) => checkRow(row) === true) || checkCol(grid) || checkDiag(grid)) return message.channel.send(`${player.username} à gagné!`)
       } else {
-        await (message.channel.send('Nope, tricheur va!')).delete({ timeout: 3000 }).catch()
+        (await message.channel.send('Nope, tricheur va!')).delete({ timeout: 3000 }).catch()
       }
     }
   } while (grid.find((p) => p.includes('❔')))
