@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const leadingZero = require('../../utils/functions')
+const { leadingZero } = require('../../utils/functions')
 const Command = require('../../utils/cmds.js')
 const cmd = new Command('userinfo', ['ui', 'info', 'uinfo'], true, false)
 cmd.run = async (client, message) => {
